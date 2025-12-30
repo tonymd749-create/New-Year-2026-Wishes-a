@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>馃檹 Happy New Year 馃檹</title>
+
+<style>
+body {
+    margin: 0;
+    background: radial-gradient(circle, #2b0000, #000);
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    overflow: hidden;
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+}
+
+img {
+    max-width: 90%;
+    border-radius: 15px;
+    box-shadow: 0 0 25px gold;
+}
+
+h1 {
+    margin-top: 15px;
+    font-size: 30px;
+    color: gold;
+    animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px gold; }
+    to { text-shadow: 0 0 40px orange; }
+}
+
+.mantra {
+    font-size: 22px;
+    margin-top: 10px;
+    color: #ffcc66;
+}
+
+input {
+    padding: 12px;
+    width: 80%;
+    max-width: 300px;
+    border-radius: 6px;
+    border: none;
+    font-size: 16px;
+    margin-top: 15px;
+}
+
+/* WhatsApp Button */
+.share-btn {
+    margin-top: 18px;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 30px;
+    background: #25D366;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.share-btn svg {
+    width: 22px;
+    height: 22px;
+}
+
+/* Fireworks Canvas */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="fireworks"></canvas>
+
+<div class="container">
+
+    <!-- 馃巻 GIF -->
+    <img src="newyear.gif" alt="Happy New Year">
+
+    <!-- 馃晧锔� Dharmik Line -->
+    <div class="mantra">馃晧锔� 啶多啶 啶曕ぐ啷嬥い啶� 啶曕げ啷嵿く啶距ぃ啶 馃晧锔�</div>
+
+    <!-- 馃帀 Greeting -->
+    <h1 id="greeting">馃帄 Happy New Year 馃帄</h1>
+
+    <!-- 鉁嶏笍 Name -->
+    <input type="text" id="nameInput" placeholder="啶呧お啶ㄠぞ 啶ㄠぞ啶� 啶侧た啶栢啶�">
+    <br>
+
+    <!-- 馃摫 WhatsApp Share Button -->
+    <button class="share-btn" onclick="shareNow()">
+        <!-- WhatsApp SVG -->
+        <svg viewBox="0 0 32 32" fill="white">
+            <path d="M16.003 2.003c-7.732 0-14 6.268-14 14 0 2.732.787 5.295 2.148 7.473L2 30l6.676-2.109A13.94 13.94 0 0 0 16.003 30c7.732 0 14-6.268 14-14s-6.268-13.997-14-13.997zm0 25.495a11.45 11.45 0 0 1-5.845-1.598l-.419-.249-3.958 1.251 1.293-3.859-.274-.398a11.46 11.46 0 1 1 9.203 4.853zm6.284-8.551c-.343-.172-2.031-1.002-2.347-1.116-.316-.114-.546-.172-.775.171-.229.343-.889 1.116-1.09 1.345-.201.229-.401.257-.744.086-.343-.171-1.448-.533-2.758-1.699-1.02-.909-1.708-2.031-1.909-2.374-.201-.343-.021-.528.15-.699.154-.153.343-.401.515-.602.172-.201.229-.343.343-.572.114-.229.057-.429-.029-.601-.086-.172-.775-1.871-1.062-2.563-.28-.673-.564-.582-.775-.593l-.658-.011c-.229 0-.601.086-.916.429-.315.343-1.202 1.174-1.202 2.86s1.231 3.316 1.403 3.545c.172.229 2.424 3.7 5.873 5.188.821.354 1.462.566 1.962.724.825.262 1.576.225 2.17.137.662-.099 2.031-.83 2.319-1.63.287-.801.287-1.488.201-1.63-.086-.143-.315-.229-.658-.401z"/>
+        </svg>
+        WhatsApp 啶ぐ Share 啶曕ぐ啷囙
+    </button>
+
+</div>
+
+<script>
+/* -------- Name from URL -------- */
+const params = new URLSearchParams(window.location.search);
+const sender = params.get("name");
+
+if (sender) {
+    document.getElementById("greeting").innerHTML =
+        "馃帀 Happy New Year 馃帀<br>馃檹 From <b>" + decodeURIComponent(sender) + "</b>";
+}
+
+/* -------- Share Function -------- */
+function shareNow() {
+    const name = document.getElementById("nameInput").value.trim();
+    if (!name) {
+        alert("啶曕啶く啶� 啶呧お啶ㄠぞ 啶ㄠぞ啶� 啶侧た啶栢啶�");
+        return;
+    }
+
+    const link = location.origin + location.pathname + "?name=" + encodeURIComponent(name);
+    const text = "馃帀 Happy New Year 馃帀\n馃檹 From " + name + "\n\n馃憞 啶︵啶栢啶� 馃憞\n" + link;
+
+    if (navigator.share) {
+        navigator.share({
+            title: "Happy New Year",
+            text: text,
+            url: link
+        });
+    } else {
+        window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank");
+    }
+}
+
+/* -------- Firecrackers 3脳 -------- */
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+let particles = [];
+
+function createFirework() {
+    for (let j = 0; j < 3; j++) { // 馃敟 3 blasts at once
+        const x = Math.random() * canvas.width;
+        const y = Math.random() * canvas.height * 0.6;
+        const colors = ["gold", "red", "orange", "yellow", "white"];
+
+        for (let i = 0; i < 180; i++) { // 馃敟 3脳 particles
+            particles.push({
+                x, y,
+                r: Math.random() * 3,
+                c: colors[Math.floor(Math.random() * colors.length)],
+                sx: (Math.random() - 0.5) * 8,
+                sy: (Math.random() - 0.5) * 8,
+                life: 80
+            });
+        }
+    }
+}
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach((p, i) => {
+        p.x += p.sx;
+        p.y += p.sy;
+        p.life--;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.c;
+        ctx.fill();
+
+        if (p.life <= 0) particles.splice(i, 1);
+    });
+
+    requestAnimationFrame(animate);
+}
+
+setInterval(createFirework, 300); // 馃敟 fast fireworks
+animate();
+</script>
+
+</body>
+</html>
+<script>
+  atOptions = {
+    'key' : '732cab52c89735ea29a77a54e958466b',
+    'format' : 'iframe',
+    'height' : 50,
+    'width' : 320,
+    'params' : {}
+  };
+</script>
+<script src="https://www.highperformanceformat.com/732cab52c89735ea29a77a54e958466b/invoke.js"></script>
